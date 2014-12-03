@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta charset="UTF-8">
+    <title>测一测你摆脱单身有多大希望</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        body{
+            font-family: sans-serif;
+            text-align: center;
+        }
+        #canvas{
+            position: fixed;
+            width: 100%;
+            height: auto;
+            top: 0px;
+            bottom: 30px;
+            left: 0px;
+            right: 0px;
+            background:#093270;
+        }
+        #copy{
+            position: fixed;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background: #ff8400;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 900;
+        }
+        .block{
+            width: 100%;
+            height: 20%;
+            background: #ccc;
+            float: left;
+            clear: none;
+            background-color: #2669b4;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size:cover;
+            border:1px solid #AFC83D; margin:-1px;
+            position: relative;
+            color: #fff;
+            
+        }
+        .block:first-child{
+            font-weight: 900;
+            background: #093270;
+        }
+        #welcome{
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+            background: url(res/bg.jpg);
+            background-size: cover;
+            z-index: 999;
+        }
+        #gameover{
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+            background: url(../../res/share.png);
+            background-size: cover;
+            z-index: 999;
+            display: none;
+        }
+        .msgPan{
+            color: rgba(255,255,255,1);
+            position: absolute;
+            width: 100%;
+            top: 0px;
+            height: 30%;
+            
+            bottom: 50%;
+            left: 0px;
+            right: 0px;
+        }
+        p{
+            margin: 10px 0px 0px 0px;
+        }
+        .buttons{
+            position: absolute;
+            width: 100%;
+            top: 30%;
+            height: 70%;
+            
+            bottom: 0%;
+            left: 0px;
+            right: 0px;
+            
+        }
+        #start{
+            position: absolute;
+            top: 20%;
+            bottom: 20%;
+            left: 20%;
+            right: 20%;
+            background: url(res/logo.jpg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-radius: 100%;
+            border: solid rgba(255,255,255,.5) 10px;
+
+        }
+        #restart{
+            position: absolute;
+            top: 10%;
+            bottom: 10%;
+            left: 10%;
+            right: 10%;
+            background: url(res/logo.jpg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-radius: 100%;
+            border: solid rgba(255,255,255,.8) 2px;
+        }
+        #outmsg{
+            font-size: 20px;
+            color: #fff;
+            width: 95%;
+            margin: 0 auto;
+            text-align: left;
+            font-size: 14px;
+        }
+        #menuButton{
+            display: none;
+        }
+    </style>
+    <script>
+        v_menu_state="hide";
+        loop=true;
+        function e_tap_menu(e){
+            if(v_menu_state=="hide"){
+                document.getElementById("menuButton").innerHTML=">";
+                loop=false;
+                v_menu_state="show";
+                
+            }else if(v_menu_state=="show"){
+                document.getElementById("menuButton").innerHTML="||";
+                loop=true;
+                v_menu_state="hide";
+                
+            }
+            e.preventDefault();
+        }
+        function _gameover(){
+            loop=false;
+            document.getElementById("outmsg").innerHTML="<p>"+v_outmsg+"</p>";
+            document.getElementById("canvas").innerHTML="";
+            document.getElementById("gameover").style.display="block";
+        }
+        function _x(e){
+            i=e.target.getAttribute("v");
+            i=parseInt(i);
+            _next(i);
+            
+        }
+        function _next(indexNumber){
+            if(loop){
+                if(indexNumber>18){
+                    v_outmsg=titles[indexNumber][1];
+                    _gameover();
+                }else{
+                    document.getElementById("canvas").innerHTML="";
+                    var li=titles[indexNumber];
+                    
+                    
+                    
+                        var e=document.createElement("div");
+                        var span=document.createElement("span");
+                        var table=document.createElement("table");
+                        table.width="100%";
+                        table.height="100%";
+                        table.style.height="100%";
+                        var tr=document.createElement("tr");
+                        var td=document.createElement("td");
+                        td.setAttribute("align","center");
+                        tr.appendChild(td);
+                        table.appendChild(tr);
+                        td.innerHTML=li[1];
+                        td.style.textAlign="left";
+                        e.setAttribute("class","block");
+                        e.appendChild(table);
+                        document.getElementById("canvas").appendChild(e);
+                        
+                        
+                        var buttons=li[2];
+                        for(i=0;i<buttons.length;i++){
+                            var e=document.createElement("div");
+                            var span=document.createElement("span");
+                            var table=document.createElement("table");
+                            table.width="100%";
+                            table.height="100%";
+                            table.style.height="100%";
+                            var tr=document.createElement("tr");
+                            var td=document.createElement("td");
+                            td.setAttribute("align","center");
+                            tr.appendChild(td);
+                            table.appendChild(tr);
+                            td.innerHTML=buttons[i][0];
+                            td.style.textAlign="left";
+                            e.setAttribute("class","block");
+                            e.appendChild(table);
+                            td.setAttribute("v",buttons[i][1]);
+                            td.addEventListener("click",_x,false);
+                            document.getElementById("canvas").appendChild(e);
+                        }
+                }
+                
+            }
+            
+            
+        }
+        function _bind(){                   
+
+            document.getElementById("menuButton").addEventListener("click",e_tap_menu,false);
+            document.getElementById("start").addEventListener("click",_restart,false);
+            
+        }
+        function init(){
+            v=0;
+            str="";
+            _bind();
+            //setInterval(looping,1000);
+            //
+            v_outmsg="";
+            //
+            titles=new Array();
+            titles.push([0,'你脱离单身的希望大吗？']);
+            titles.push([1,'你经常跟朋友联系吗？',[['是的，经常联系。','2'],['不经常联系','3']]]);
+            titles.push([2,'你的朋友经常认为你是逗比吗？',[['对的，很有喜感','3'],['没有幽默感','4']]]);
+            titles.push([3,'你很有耐心吗？',[['是的，很有耐心','5'],['没有耐心','4']]]);
+            titles.push([4,'你会相信那些传奇的故事吗？',[['是的，相信','5'],['相信，但跟我无关','6'],['不信','7']]]);
+            titles.push([5,'你会选择哪些地点看书呢？',[['咖啡屋','6'],['公园里','7'],['随便哪儿都行','8']]]);
+            titles.push([6,'曾经有一个人出现，你永远忘不了ta吗？',[['是的','8'],['没有','9']]]);
+            titles.push([7,'你觉得自己很热情吗？',[['很热情','9'],['不热情','8']]]);
+            titles.push([8,'阳光正好风和日丽，你去公园',[['在木椅上看书','9'],['散步','10'],['在树下发呆','11']]]);
+            titles.push([9,'你觉得会有下辈子吗？',[['有','11'],['没有','10']]]);
+            titles.push([10,'你想对不起别人还是别人对不起你？',[['我对不起别人','11'],['别人对不起我','12']]]);
+            titles.push([11,'你向往的爱情是？',[['简单平凡的','13'],['华丽丽的高大上的','12'],['没想过','14']]]);
+            titles.push([12,'你羡慕哪种人？',[['老夫老妻携手漫步','15'],['一家人席地聚餐','14'],['一对儿情侣拥抱','13']]]);
+            titles.push([13,'你已经习惯了单身，觉得两个人多了一个？',[['是啊，自己多好。','14'],['我才不想一个人','16']]]);
+            titles.push([14,'我要很幸福，这种信念来源于？',[['受刺激之后','16'],['看别人幸福也想这样','24'],['自己想的','15']]]);
+            titles.push([15,'你有文艺范儿吗？',[['有','17'],['没有','16'],['偶尔','19']]]);
+            titles.push([16,'恋爱时智商为0，你认同吗？',[['认同','17'],['不认同','23']]]);
+            titles.push([17,'你会因为剧情而落泪吗？',[['会','21'],['不会','18']]]);
+            titles.push([18,'你会为了挽回感情而不顾自尊和形象？',[['为了感情要啥自尊','22'],['才不呢，我会寻找下一个。','20']]]);
+            titles.push([19,'你脱单希望渺茫，不过等你到40岁，就慢慢习惯了。。。']);
+            titles.push([20,'你很习惯这种单身生活，所以不轻易寻找另一半。']);
+            titles.push([21,'你非常着急摆脱单身，却一直无法摆脱单身。']);
+            titles.push([22,'你是那种觉得另一半可有可无的人，但是在你心情低落时却想找个人来陪。']);
+            titles.push([23,'你深受单身之苦所恼，正在改变这种状况，你有希望脱离单身。']);
+            titles.push([24,'单身？你是单身？别逗了。']);
+            
+            v_index=0;
+            
+            var img=new Image();
+            img.src="http://img.users.51.la/17425778.asp";
+        }
+        function _restart(e){
+            document.getElementById("welcome").style.display="none";
+            document.getElementById("gameover").style.display="none";
+            v_time=0;
+            v_index=0;
+            loop=true;
+            v=0;
+            str="";
+            _next(1);
+            e.preventDefault();
+        }
+        function e_tap(e){
+            if(e.target.getAttribute("isselect")=="yes"){
+                _next();
+            }else{
+                _gameover();
+            }
+            e.preventDefault();
+        }
+        window.addEventListener("load",init,false);
+        //
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        shareLink="http://www.dobezoo.com/test/1111";
+        shareTitle=document.title;
+        shareIcon="http://www.dobezoo.com/test/diaosi/res/logo.jpg";
+        // 发送给好友
+        WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+            WeixinJSBridge.invoke('sendAppMessage', {
+                "img_url":shareIcon,
+                "img_width": "100",
+                "img_height": "100",
+                "link": shareLink,
+                "desc": "",
+                "title": shareTitle
+            }, function (res) {
+                _report('send_msg', res.err_msg);
+            })
+        });
+        // 分享到朋友圈
+        WeixinJSBridge.on('menu:share:timeline', function (argv) {
+            WeixinJSBridge.invoke('shareTimeline', {
+                "img_url":shareIcon,
+                "img_width": "100",
+                "img_height": "100",
+                "link": shareLink,
+                "desc": "",
+                "title": shareTitle
+            }, function (res) {
+                _report('timeline', res.err_msg);
+            });
+        });
+    });
+        //
+    </script>
+</head>
+    <body>
+        <div id="topbar">
+            <div id="menuButton">
+                ||
+            </div>
+            <div id="logoPan">
+                <div id="logo">测一测你摆脱单身有多大希望</div>
+            </div>
+        </div>
+        <div id="canvas">
+        </div>
+        <div id="welcome">
+            <div class="msgPan">
+                <div id="msg">
+                    <table width="100%" height="100">
+                        <tr>
+                            <td align="center">
+                                <p>测一测你摆脱单身有多大希望</p>
+                                <p>点击下面的玫瑰开始测试</p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="buttons">
+                <div id="start"></div>
+            </div>
+        </div>
+        <div id="gameover">
+            <div class="msgPan">
+            </div>
+            <div class="buttons">
+                <div id="outmsg"></div>
+            </div>
+        </div>
+        <div id="copy">dobeZoo</div>
+        <div style="display:none">
+            <img src="res/logo.jpg">
+            <img src="../../res/share.png">
+        </div>
+    </body>
+</html>

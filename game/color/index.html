@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="email=no" name="format-detection"/>
+<title>色块消除</title>
+<style>
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+    body{
+        text-align: center;
+        background: rgba(100,160,60,0.5);
+    }
+    #v{
+        width: 100%;
+        font-size: 28px;
+    }
+    #canvas{
+        width:300px;
+        height:300px;
+        margin:0 auto;
+        margin-top: 10px;
+        position: relative;
+        background: #f87;
+        border-radius: 100%;
+        border: solid #fff 2px;
+    }
+    .color{
+        display:block;
+        float: left;
+        clear: none;
+        -moz-box-shadow:0 0 0 0.1em #fff inset;
+        -webkit-box-shadow:0 0 0 0.1em #fff inset;
+        box-shadow:0 0 0 0.1em #fff inset;
+        color: #fff;
+        border-radius: 50%;
+        
+    }
+    #timePan{
+        position: absolute;
+        width: 90px;
+        height: 90px;
+        top: 50%;
+        left: 50%;
+    }
+    #time{
+        position: absolute;
+        top:-50px;
+        left: -50px;
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        text-align: center;
+        color: #fff;
+        
+    }
+    #start{
+        position: absolute;
+        top:-50px;
+        left: -50px;
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        text-align: center;
+        background: #f00;
+        color: #fff;
+        border: solid #fff 2px;
+        z-index: 999;
+    }
+    #buttonA{
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        top: 0px;
+        left: 0px;
+        background: #f00;
+        border-radius: 100%;
+        border: solid #fff 2px;
+    }
+    #buttonB{
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        top: 0px;
+        right: 0px;
+        background: #f00;
+        border-radius: 100%;
+        border: solid #fff 2px;
+    }
+    #buttonC{
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        bottom: 0px;
+        left: 0px;
+        background: #f00;
+        border-radius: 100%;
+        border: solid #fff 2px;
+    }
+    #buttonD{
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        bottom: 0px;
+        right: 0px;
+        background: #f00;
+        border-radius: 100%;
+        border: solid #fff 2px;
+    }
+    #gameover,#gamestart{
+        position: fixed;
+        z-index: 999;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        background: rgba(0,0,0,0.8);
+        display: none;
+    }
+    #gamestart{
+        display: block;
+    }
+    .msg{
+        position:absolute;
+        height: 10%;
+        left: 10%;
+        right: 10%;
+        width: 80%;
+        height: auto;
+        top: 5%;
+        bottom: 5%;
+        border-radius: 10px;
+        font-size: 28px;
+        font-weight: 700;
+        background: rgba(255,0,0,0.5);
+        color: #fff;
+    }
+    .pic{
+        background: url(2.png);
+        display:block;
+        float: left;
+        clear: none;
+        -moz-box-shadow:0 0 0 0.1em #fff inset;
+        -webkit-box-shadow:0 0 0 0.1em #fff inset;
+        box-shadow:0 0 0 0.1em #fff inset;
+        border-radius: 50%;
+        background-size: 100%;
+    }
+    .picSel{
+        background: url(1.png);
+        display:block;
+        float: left;
+        clear: none;
+        -moz-box-shadow:0 0 0 0.1em #fff inset;
+        -webkit-box-shadow:0 0 0 0.1em #fff inset;
+        box-shadow:0 0 0 0.1em #fff inset;
+        border-radius: 50%;
+        background-size: 100%;
+    }
+    #gameover button,#gamestart button{
+        position:absolute;
+        height: 10%;
+        left: 25%;
+        width: 50%;
+        right: 25%;
+        bottom: 10%;
+        border-radius: 30px;
+        font-size: 18px;
+        font-weight: 700;
+        background: #fff;
+    }
+    p{
+        width: 100%;
+        margin-top: 10px;
+
+
+    }
+    p span{
+        font-weight: 900;
+    }
+</style>
+<script>
+    alltime=0;
+    colors=31;
+    loop=false;
+    select=0;
+    function gameover(){
+        loop=false;
+        document.getElementById("gameover").style.display="block";
+        
+        shareTitle="我消除30个色块耗时"+alltime+"秒";
+        
+        document.getElementById("msgT").innerHTML=alltime;
+        select.style.background="#f00";
+    }
+    function restart(){
+        document.getElementById("start").style.display="none";
+        document.getElementById("gameover").style.display="none";
+        alltime=0;
+        colors=31;
+        loop=true;
+        select=0;
+        next();
+    }
+    function randomColor(){
+        var r=Math.floor(Math.random() * 200)+1;
+        var g=Math.floor(Math.random() * 100)+1;
+        var b=Math.floor(Math.random() * 100)+1;
+        var a=Math.floor(Math.random() * 1)+0.5;
+        document.getElementById("canvas").style.background="rgba("+r+","+g+","+b+",1)";
+        
+        var tmp_index=Math.floor(Math.random()*4);
+        if(tmp_index==0){
+            select="a";
+            document.getElementById("buttonA").style.background="rgba("+r+","+g+","+b+",1)";
+        }
+        if(tmp_index==1){
+            select="b";
+            document.getElementById("buttonB").style.background="rgba("+r+","+g+","+b+",1)";
+        }
+        if(tmp_index==2){
+            select="c";
+            document.getElementById("buttonC").style.background="rgba("+r+","+g+","+b+",1)";
+        }
+        if(tmp_index==3){
+            select="d";
+            document.getElementById("buttonD").style.background="rgba("+r+","+g+","+b+",1)";
+        }
+    }
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            var icon="res/icon.png";
+            var url=document.location.href;
+            var urlArr=url.split("/");
+            var imgUrl="";
+            for(i=0; i<urlArr.length-1;i++){
+                imgUrl+=urlArr[i]+"/";
+            }
+            imgUrl+=icon;
+            shareLink=document.location.href;
+            shareTitle=document.title;
+            shareIcon="http://www.dobebox.com/game/color/icon.png";
+            // 发送给好友
+            WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+                WeixinJSBridge.invoke('sendAppMessage', {
+                    "img_url":shareIcon,
+                    "img_width": "100",
+                    "img_height": "100",
+                    "link": shareLink,
+                    "desc": "",
+                    "title": shareTitle
+                }, function (res) {
+                    _report('send_msg', res.err_msg);
+                    document.querySelector("#rewrite").style.display="block";
+                })
+            });
+            // 分享到朋友圈
+            WeixinJSBridge.on('menu:share:timeline', function (argv) {
+                WeixinJSBridge.invoke('shareTimeline', {
+                    "img_url":shareIcon,
+                    "img_width": "100",
+                    "img_height": "100",
+                    "link": shareLink,
+                    "desc": "",
+                    "title": shareTitle
+                }, function (res) {
+                    _report('timeline', res.err_msg);
+                    document.querySelector("#rewrite").style.display="block";
+                });
+            });
+    });
+    function looping(){
+        alltime++;
+        document.getElementById("time").innerHTML=alltime;
+    }
+    function next(){
+        colors--;
+        randomColor();
+        if(colors==0){
+            gameover();
+        }
+    }
+    function checkA(e){
+        if(select=="a"){
+            next();
+        }
+        e.preventDefault();
+    }
+    function checkB(e){
+        if(select=="b"){
+            next();
+        }
+        e.preventDefault();
+    }
+    function checkC(e){
+        if(select=="c"){
+            next();
+        }
+        e.preventDefault();
+    }
+    function checkD(e){
+        if(select=="d"){
+            next();
+        }
+        e.preventDefault();
+    }
+    function init(){
+        document.getElementById("buttonA").addEventListener("click",checkA,false);
+        document.getElementById("buttonB").addEventListener("click",checkB,false);
+        document.getElementById("buttonC").addEventListener("click",checkC,false);
+        document.getElementById("buttonD").addEventListener("click",checkD,false);
+        document.getElementById("buttonA").addEventListener("touchstart",checkA,false);
+        document.getElementById("buttonB").addEventListener("touchstart",checkB,false);
+        document.getElementById("buttonC").addEventListener("touchstart",checkC,false);
+        document.getElementById("buttonD").addEventListener("touchstart",checkD,false);
+        setInterval(looping,1000);
+    }
+    window.addEventListener("load",init,false);
+</script>
+</head>
+<body>
+
+<div id="canvas">
+    <div id="timePan">
+        <div id="time">00.00</div>
+        <div id="start" onclick="restart()">开始</div>
+    </div>
+    <div id="buttonA"></div>
+    <div id="buttonB"></div>
+    <div id="buttonC"></div>
+    <div id="buttonD"></div>
+</div>
+<div style="margin:10px 0px 0px 0px;line-height:25px;">
+    <p>逗比盒子</p>
+    <div style="display:none;"><img src="http://img.users.51.la/17388448.asp" style="border:none" /></div>
+</div>
+</body>
+</div>
+<div id="gameover">
+    <div class="msg">
+        <img src="../../res/share.png" width="100%">
+        <p>我消除30个色块耗时<span id="msgT"></span>秒</p>
+    </div>
+    <button onclick="restart()">重新开始。</button>
+</div>
+
+</body>
+</html>

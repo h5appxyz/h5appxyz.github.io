@@ -1,0 +1,69 @@
+#welcome_page{
+
+}
+#canvas_page{
+
+}
+#over_page{
+
+}
+#win_page{
+
+}
+#about_page{
+
+}
+#more_page{
+
+}
+#share_page{
+    background: #f00;
+}
+#start_button{
+    position: absolute;
+    top: 30%;
+    left: 30px;
+    right: 30px;
+    height: 50px;
+    line-height: 50px;
+    background: #ccc;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 900;
+}
+#restart_button{
+    position: absolute;
+    top: 30%;
+    left: 30px;
+    right: 30px;
+    height: 50px;
+    line-height: 50px;
+    background: #ccc;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 900;
+}
+#share_button{
+    position: absolute;
+    top: 60%;
+    left: 30px;
+    right: 30px;
+    height: 50px;
+    line-height: 50px;
+    background: #ccc;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 900;
+}
+#winshare_button{
+    position: absolute;
+    top: 60%;
+    left: 30px;
+    right: 30px;
+    height: 50px;
+    line-height: 50px;
+    background: #ccc;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 900;
+}

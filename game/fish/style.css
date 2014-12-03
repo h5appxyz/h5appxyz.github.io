@@ -1,0 +1,283 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+body {
+    overflow: hidden;
+}
+@-webkit-keyframes load_page{
+    0%{
+        left: 0%;
+    }
+    90%{
+        left: 0%;
+    }
+    100%{
+        left: -100%;
+    }
+}
+@-webkit-keyframes welcome_to_canvas_page{
+    from{
+        left: -100%;
+    }
+    to{
+        left: -200%;
+    }
+}
+@-webkit-keyframes canvas_to_over_page{
+    from{
+        left: -200%;
+    }
+    to{
+        left: -300%;
+    }
+}
+@-webkit-keyframes canvas_to_win_page{
+    from{
+        left: -200%;
+        top: 0%;
+    }
+    to{
+        top: -100%;
+        left: 0%;
+    }
+}
+
+@-webkit-keyframes over_to_canvas_page{
+    from{
+        left: -300%;
+    }
+    to{
+        left: -200%;
+    }
+}
+@-webkit-keyframes over_to_share_page{
+    from{
+        left: -300%;
+        top: 0%;
+    }
+    to{
+        top: -100%;
+        left: -300%;
+    }
+}
+@-webkit-keyframes win_to_share_page{
+    from{
+        left: -0%;
+        top: -100%;
+    }
+    to{
+        top: -100%;
+        left: -300%;
+    }
+}
+
+@-webkit-keyframes share_to_welcome_page{
+    from{
+        left: -300%;
+        top: -100%;
+    }
+    to{
+        top: 0%;
+        left: -100%;
+    }
+}
+
+.load_page{
+    left: -100%;
+    top: 0%;
+    -webkit-animation: load_page 5s linear 0s 1;
+}
+.welcome_to_canvas_page{
+    left: -200%;
+    top: 0%;
+    -webkit-animation: welcome_to_canvas_page 0.5s linear 0s 1;
+}
+.canvas_to_over_page{
+    left: -300%;
+    top: 0%;
+    -webkit-animation: canvas_to_over_page 0.5s linear 0s 1;
+}
+.canvas_to_win_page{
+    left: 0%;
+    top: -100%;
+    -webkit-animation: canvas_to_win_page 0.5s linear 0s 1;
+}
+.over_to_canvas_page{
+    left: -200%;
+    top: 0%;
+    -webkit-animation: over_to_canvas_page 0.5s linear 0s 1;
+}
+.over_to_share_page{
+    left:-300%;
+    top: -100%;
+    -webkit-animation: over_to_share_page 0.5s linear 0s 1;
+}
+.win_to_share_page{
+    left:-300%;
+    top: -100%;
+    -webkit-animation: win_to_share_page 0.5s linear 0s 1;
+}
+
+.share_to_welcome_page{
+    left:-100%;
+    top: 0%;
+    -webkit-animation: share_to_welcome_page 0.5s linear 0s 1;
+}
+#wrap{
+    position: fixed;
+    width: 400%;
+    height: 200%;
+    overflow: hidden;
+}
+.page_load{
+    left: 0%;
+}
+
+@-webkit-keyframes bg /* Safari 和 Chrome */{
+    0% {
+        opacity: 0.8;
+        background-position: 0px -150%,0px -150%;
+    }
+    80% {
+         opacity: 1;
+         background-position: 1000px 10%,-1000px 10%;
+    }
+    95% {
+        opacity: 1;
+        background-position: 1000px 10%,-1000px 10%;
+    }
+    100% {
+        opacity: 1;
+        background-position: 1000px 10%,-1000px 10%;
+    }
+}
+#loading_page{
+    position: absolute;
+    width:25%;
+    height: 50%;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    left: 0%;
+    z-index: 999;
+}
+.welcomekeyframe{
+    background-image: url("res/sea.png"),url("res/sea2.png");
+    background-position: 0px 10%,1000px 10%;
+    background-repeat:repeat-x;
+    -webkit-animation: bg 5s linear 0s 1;
+}
+#logopan{
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 50%;
+    left: 50%;
+}
+@-webkit-keyframes logo /* Safari 和 Chrome */{
+    0% {
+        opacity: 0;
+        -webkit-transform:rotate(1800deg);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform:rotate(0deg);
+    }
+}
+.logokeyframe{
+    opacity: 1;
+    -webkit-animation: logo 4s linear 0s 1;
+}
+#logo{
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 100px;
+    height: 100px;
+}
+.logo_init{
+    opacity: 0;
+}
+.copyright{
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    font-weight: 900;
+    text-align: center;
+    color: #fff;
+    bottom: 0px;
+}
+#welcome_page{
+    position:absolute;
+    text-align: center;
+    width: 25%;
+    height: 50%;
+    top: 0px;
+    bottom: 0px;
+    left: 25%;
+    overflow: hidden;
+}
+#canvas_page{
+    position:absolute;
+    text-align: center;
+    width: 25%;
+    height: 50%;
+    top: 0px;
+    bottom: 0px;
+    left: 50%;
+    overflow: hidden;
+}
+#over_page{
+    position:absolute;
+    text-align: center;
+    width: 25%;
+    height: 50%;
+    top: 0px;
+    bottom: 0px;
+    left: 75%;
+    overflow: hidden;
+}
+#win_page {
+    position:absolute;
+    text-align: center;
+    width: 25%;
+    height: 50%;
+    top: 50%;
+    bottom: 0px;
+    left: 0%;
+    overflow: hidden;
+}
+#about_page {
+    position:absolute;
+    text-align: center;
+    width: 25%;
+    height: 50%;
+    top: 50%;
+    bottom: 0px;
+    left: 25%;
+    overflow: hidden;
+}
+#more_page {
+    position:absolute;
+    text-align: center;
+    width: 25%;
+    height: 50%;
+    top: 50%;
+    bottom: 0px;
+    left: 50%;
+    overflow: hidden;
+}
+#share_page {
+    position:absolute;
+    text-align: center;
+    width: 25%;
+    height: 50%;
+    top: 50%;
+    bottom: 0px;
+    left: 75%;
+    overflow: hidden;
+}
+

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+<meta charset="UTF-8">
+<title>你能阻止她购买吗？</title>
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<style>
+    *{
+        margin:0px;
+        padding: 0px;
+    }
+
+    #welcome,#gameover,#loading{
+        width:100%;
+        height:100%;
+        position: fixed;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        display: none;
+        z-index: 999;
+    }
+
+    #welcome{
+        background:url(buy/welcome.png);
+        background-size: 100% 100%;
+    }
+    #gameover{
+        background: rgba(255,255,255,.3);
+    }
+    p{
+        width: 90%;
+        left: 5%;
+        position: fixed;
+        top: 45%;
+        color: #fff;
+        
+    }
+    #start{
+        width: 36%;
+        height: 60px;
+        line-height:60px;
+        text-align: center;
+        left: 33%;
+        position: fixed;
+
+        border: none;
+        outline: none;
+        bottom: 8%;
+        zoom: 0;
+        background: rgba(255,0,0,.9);
+        color:#fff;
+
+    }
+    #msg{
+        position: fixed;
+        top: 31%;
+        width: 100%;
+        left: 0px;
+        right: 0px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 700;
+        color: #000;
+    }
+    #restart{
+        width: 40%;
+        height: 40px;
+        line-height:40px;
+        text-align: center;
+        left:0px;
+        position: fixed;
+        background: rgba(255,0,0,1);
+        color:#fff;
+        color: #fff;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        bottom: 8%;
+        zoom: 0;
+    }
+    #link{
+        width: 40%;
+        height: 40px;
+        line-height:40px;
+        text-align: center;
+        right: 0px;
+        position: fixed;
+        background: rgba(255,0,0,1);
+        color:#fff;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        bottom: 8%;
+        zoom: 0;
+    }
+    #copy{
+        position: fixed;
+        bottom: 0px;
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        color: #f00;
+        z-index: 999;
+        background: rgba(255,255,255,0.5);
+    }
+    #gamebox{
+        width:100%;
+        height:100%;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        z-index: 0;
+        background: #00CCFF;
+        display: none;
+    }
+    #goods{
+        position:absolute;
+        top: 0px;
+        height:30%;
+        left: 0px;
+        right: 0px;
+        background: #ccc;
+        text-align: center;
+    }
+    #goods img{
+        margin: 0 auto;
+    }
+    #buy_button{
+        position: absolute;
+        top: 31%;
+        height: 40px;
+        text-align: center;
+        color: #fff;
+        line-height: 40px;
+        font-size: 16px;
+        font-weight: 900;
+        left: 10%;
+        right: 10%;
+        background: #fb5555;
+        border-radius: 10px;
+        
+    }
+    #hand{
+        position: fixed;
+        top: 110%;
+        width: 100%;
+        left: 0px;
+        right: 0px;
+        height: 1000px;
+        background: url(buy/hand.png);
+        background-position: top center;
+        background-size: 30%;
+        background-repeat: no-repeat;
+    }
+    #knife{
+        position: fixed;
+        top: 35%;
+        width: 100%;
+        left: 40%;
+        right: 0px;
+        bottom: 20px;
+        background: url(buy/knife.png);
+        background-position: top left;
+        background-size: 40%;
+        background-repeat: no-repeat;
+        display: none;
+    }
+</style>
+<script>
+function welcome(){
+    document.getElementById("welcome").style.display="block";
+    document.getElementById("gameover").style.display="none";
+    document.getElementById("loading").style.display="none";
+    document.getElementById("gamebox").style.display="none";
+    
+}
+function gameover(i){
+    loop=false;
+    if(i==0){
+        var msg="呜呜，我没能阻止她购买内些没用的东西！";
+    }
+    if(i==1){
+        var msg="嘻嘻！我成功阻止了她购买内些没用的东西！";
+    }
+    //var msg="我消灭了"+getObj+"个子弹，但是马里奥还是挂了！";
+    
+    shareTitle=msg;
+    document.getElementById("msg").innerHTML=msg;
+    document.getElementById("gameover").style.display="block";
+    document.getElementById("welcome").style.display="none";
+    document.getElementById("loading").style.display="none";
+    document.getElementById("gamebox").style.display="none";
+}
+function link(){
+    if(Date.parse(new Date())-buttonLustTapTime>800) {
+        window.location.href = "http://www.dobebox.com";
+    }
+}
+function init(){
+    speed=2;
+    buytime=30;
+    handtop=110;
+    loop=false;
+    initbuttons();
+    welcome();
+    playerTime=0;
+    var tj=new Image();
+    tj.src="http://img.users.51.la/17388441.asp";
+    //
+    setInterval(looping,1000/16);
+    setInterval(time,1000);
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        var icon="res/icon.png";
+        var url=document.location.href;
+        var urlArr=url.split("/");
+        var imgUrl="";
+        for(i=0; i<urlArr.length-1;i++){
+            imgUrl+=urlArr[i]+"/";
+        }
+        imgUrl+=icon;
+        shareLink=document.location.href;
+        shareTitle=document.title;
+        shareIcon="http://www.dobebox.com/game/buy/icon.png";
+        // 发送给好友
+        WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+            WeixinJSBridge.invoke('sendAppMessage', {
+                "img_url":shareIcon,
+                "img_width": "100",
+                "img_height": "100",
+                "link": shareLink,
+                "desc": "",
+                "title": shareTitle
+            }, function (res) {
+                _report('send_msg', res.err_msg);
+            })
+        });
+        // 分享到朋友圈
+        WeixinJSBridge.on('menu:share:timeline', function (argv) {
+            WeixinJSBridge.invoke('shareTimeline', {
+                "img_url":shareIcon,
+                "img_width": "100",
+                "img_height": "100",
+                "link": shareLink,
+                "desc": "",
+                "title": shareTitle
+            }, function (res) {
+                _report('timeline', res.err_msg);
+            });
+        });
+    });
+}
+function restart(){
+    document.getElementById("welcome").style.display = "none";
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("gameover").style.display = "none";
+    document.getElementById("gamebox").style.display="block";
+    handtop=110;
+    speed=1;
+    playerTime=0;
+    buytime=21;
+    loop=true;
+    knifeshow=0;
+}
+window.addEventListener('load',init,false);
+function initbuttons(){
+    document.querySelector("#start").addEventListener('click',restart);
+    document.querySelector("#restart").addEventListener('click',restart);
+    document.querySelector("#link").addEventListener('click',link);
+    document.querySelector("#hand").addEventListener('touchstart',click);
+}
+function looping(){
+    if(loop){
+        knifeshow++;
+        handtop-=speed;
+        if(handtop<=32){
+            gameover(0);
+        }
+        document.getElementById("hand").style.top=handtop+"%";
+        document.getElementById("knife").style.top=handtop+"%";
+        if(knifeshow>2){
+            knifeshow=0;
+            document.getElementById("knife").style.display="none";
+        }
+        
+        if(buytime==0){
+            gameover(1);
+        }
+    }
+}
+function time(){
+    if(loop){
+        playerTime++;
+        buytime--;
+        document.getElementById("buy_button").innerHTML="抢购（剩余时间"+buytime+"秒）";
+        speed+=0.1;
+    }
+}
+function click(){
+    handtop+=5;
+    document.getElementById("knife").style.display="block";
+}
+</script>
+</head>
+<body>
+<div id="loading">loading</div>
+<div id="welcome">
+    <div id="start" ontouchstart="restart();">猛戳此处开始</div>
+</div>
+<div id="gameover">
+    <p id="msg"></p>
+    <div id="restart" ontouchstart="restart();">再玩一局！</div>
+    <div id="link" ontouchstart="link();">更多游戏</div>
+</div>
+<div id="gamebox">
+    <div id="goods">
+        <img src="buy/good.png" height="100%">
+    </div>
+    <div id="buy_button">立刻购买</div>
+    <div id="hand"></div>
+    <div id="knife"></div>
+</div>
+<div id="copy">逗比盒子</div>
+</body>
+</html>

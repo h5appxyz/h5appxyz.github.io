@@ -1,0 +1,346 @@
+*{
+    margin:0;
+    padding:0;
+}
+body{
+    width:100%;
+    
+}
+/*
+.wrap{
+    width: 320px;
+    height: 480px;
+    margin: 0 auto;
+    position: relative;
+    background: url(res/bg.png);
+    background-size: contain;
+}
+*/
+.wrap{
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        background: url(res/bg.jpg);
+        background-size: 100% 100%;
+}
+.page{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    overflow: hidden;
+    display: none;
+}
+@-webkit-keyframes welcome{
+    0%{
+        -webkit-transform:rotate(-10deg);
+    }
+    50%{
+        -webkit-transform:rotate(10deg);
+    }
+    100%{
+        -webkit-transform:rotate(-10deg);
+    }
+}
+#welcome{
+    background: url(res/logo.png);
+    background-size: 80%;
+    background-position: center 20%;
+    background-repeat: no-repeat;
+    
+    -webkit-animation: welcome 2s ease 100;
+}
+#game_over_image,#you_win_image{
+    position: absolute;
+    width: auto;
+    height: auto;
+    top: 20px;
+    left:10px;
+    right:10px;
+    display: none;
+}
+#game_over_image img,#you_win_image img{
+    width: 100%;
+}
+@-webkit-keyframes start_button{
+    0%{
+        top: -100%;
+        left: 10px;
+        right: 10px;
+    }
+    80%{
+        top: 55%;
+        left: 10px;
+        right: 10px;
+    }
+    100%{
+        top: 55%;
+        left: 50px;
+        right: 50px;
+    }
+}
+#facepan{
+    position: absolute;
+    width: 50%;
+    top: 50px;
+    height: 50%;
+    left: 50%;
+}
+#facepan img{
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    border: solid 2px rgba(255,255,255,1);
+    margin: -2px;
+    position: absolute;
+    top: 0px;
+    left: -50px;
+    box-shadow: 0 0 50px 10px rgba(255,255,255,0.5);
+}
+#names{
+    position: absolute;
+    top: 180px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+.name:nth-child(1n){
+    position: relative;
+    width: 40%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: #ccc;
+    border-radius: 4px;
+    font-weight: 900;
+    background: rgba(235,102,14,.9);
+    color: #fff;
+    margin: 10px 0px 0px 10px;
+    float: left;
+}
+.name:nth-child(2n){
+    position: relative;
+    width: 40%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: #ccc;
+    border-radius: 4px;
+    font-weight: 900;
+    background: rgba(235,102,14,.9);
+    color: #fff;
+    margin: 10px 10px 0px 0px;
+    float: right;
+}
+#start_button{
+    position: absolute;
+    width: auto;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: #ccc;
+    top: 55%;
+    left: 50px;
+    right: 50px;
+    border-radius: 4px;
+    font-weight: 900;
+    background: rgba(235,102,14,.9);
+    color: #fff;
+    -webkit-animation: start_button 2s ease 1;
+}
+#restart_button{
+    position: absolute;
+    width: auto;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: #ccc;
+    top: 50%;
+    left: 10px;
+    right: 10px;
+    border-radius: 4px;
+    font-weight: 900;
+    background: rgba(235,102,14,.9);
+    color: #fff;
+}
+#share_button{
+    position: absolute;
+    width: auto;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: rgba(255,54,0,.9);
+    top: 65%;
+    left: 10px;
+    right: 10px;
+    border-radius: 4px;
+    font-weight: 900;
+    color: #fff;
+}
+#share{
+    background: url(res/share.png);
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-size: contain;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 10px;
+    bottom: 0px;
+}
+#msg{
+    position: absolute;
+    top: 25%;
+    color: #fff;
+    left: 10px;
+    right: 10px;
+    height: auto;
+    font-size: 16px;
+    line-height: 25px;
+}
+#msg span{
+    color: #f00;
+    font-size: 18px;
+    font-weight: 900;
+}
+#ufopan{
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    right: 0px;
+}
+@-webkit-keyframes ufo_come{
+    0%{
+        left:-800px;
+        -webkit-transform:rotate(10deg);
+    }
+    50%{
+        -webkit-transform:rotate(-10deg);
+    }
+    100%{
+        left:-140px;
+        -webkit-transform:rotate(10deg);
+    }
+}
+@-webkit-keyframes ufo{
+    0%{
+        
+        -webkit-transform:rotate(10deg);
+    }
+    50%{
+        -webkit-transform:rotate(-10deg);
+    }
+    100%{
+        
+        -webkit-transform:rotate(10deg);
+    }
+}
+@-webkit-keyframes ufo_go{
+    0%{
+        left:-140px;
+    }
+    100%{
+        left:1440px;
+    }
+}
+#ufo{
+    background: url(res/ufo.png);
+    position: absolute;
+    top: 10px;
+    left: -140px;
+    width: 280px;
+    height: 94px;
+    background-size: 100% 100%;
+    -webkit-transform:rotate(0deg);
+    -webkit-animation: ufo_come 0.5s ease 0s 1;
+}
+#ufo #com{
+    position: absolute;
+    top: 40px;
+    left: 0px;
+    right: 0px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 900;
+    color: #000;
+}
+@-webkit-keyframes mars{
+    from{
+        bottom: -100px;
+    }
+    to{
+        bottom: 0px;
+    }
+}
+#mars{
+    background: url(res/mars.png);
+    width: 100%;
+    height:25%;
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: 100% 100%;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    -webkit-animation: mars 3s ease 1;
+}
+#bar{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    height: 30px;
+}
+#geticon{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius:5px;
+    border: solid #fff 1px;
+    margin: -1px;
+}
+#getmans{
+    position: absolute;
+    top: 0px;
+    left: 45px;
+    color: #f00;
+    font-size: 25px;
+}
+#clock{
+    position: absolute;
+    top: 0px;
+    right: 50px;
+    opacity: 0.5;
+}
+#time{
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    color: #f00;
+    font-size: 25px;
+}
+#copylogo{
+    position: absolute;
+    
+}
+.copy{
+    position: absolute;
+    bottom: 2px;
+    left: 0px;
+    right: 0px;
+    text-align: center;
+    font-size: 13px;
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+    font-weight: 900;
+}
+@media screen and (max-width: 640px){
+    
+}

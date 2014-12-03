@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+<meta charset="UTF-8">
+<title>车车往前冲</title>
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<style>
+    *{
+        margin:0px;
+        padding: 0px;
+    }
+    #myCanvas{
+        width:100%;
+        height:100%;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        z-index: 0;
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAnYAAAOECAMAAAAbp4xtAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABhQTFRFI5leH6ApL2g+TrMgVKFTNtNKqampMzMzHjlb/QAAE+xJREFUeNrs3e1uHLkRBVCt7d19/zdOFA0t9jU5LXmaxYl86k+g0ahQwD1wsAQ/Xv66W3/frft/+++T1D+H+vcp6zlnfM34R9TLrdrPbeZm4ltU+/z7rd6+/YKdGTewW9dapNhhhx12IsUOOzNihx122GGHHXaV9Zpls5AZt+zTTC69td8frWBnxh3s1rUWKXbYYYedSLHDzozYYYcddthhh11ljbaztaxzE1xP9bXub47Dzow72K1rLVLssMMOO5Fih50ZscMOO+ywww67yuo3tb1E5aLabDEtfx9rcNiZsZDdutYixQ477LATKXbYmbGa3eQj7MyIHXbYYfeHzPgZA7lpbnb4FTvs9rHrl4evbS1S7LDDDjuRYoedGbHDDjvssMMOu8rqL5Vr2bbsc5tbHnLNzXHHz7Ez4w5261qLFDvssMNOpNhhZ0bssMMOO+yww66y+mwz+9llc7PDr8fvY2fGHez61snnsdYixQ477LATKXbYmRE77LDDDjvssNuxZPyRw6yzw6+52Hb7GDszbmDXt84/eay1SLHDDjvsRIoddmbEDjvssMMOO+wq638Pl0TGMytpIBff2udvnbEz4w5261qLFDvssMNOpNhhZ0bssMMOO+yww656qfhH1NkjsLNNc98PhZ0Zd7DrW8+OZf9ea5Fihx122IkUO+zMiB122GGHHXbYVU+Vm93ymHbaSDPjRyawM+MudmtaixQ77LDDTqTYYWdG7LDDDjvssMOusl6znB3Lnm2K+9jvsTPjDnbrWosUO+yww06k2GFnRuywww477LDDrrL6TW1t0Wx2aPV71Gxz3Nun2JlxB7t1rUWKHXbYYSdS7LAzI3bYYYcddthhV71cnI9EpIXZ5XTt85fuAdnuORTszLiB3brWIsUOO+ywEyl22JkRO+ywww477LCrrD7j3OwWjF7SzsxKt80TOzMWs1vXWqTYYYcddiLFDjszYocddthhhx121exa2meb3fKyubyMrv19d60idmbcwG62PPxYa5Fihx122IkUO+zMiB12z8XuuM0DO+yww+5rzjh7vrjV7HK69vvWBzvs9rNb11qk2GGHHXYixQ47M2KHHXbYYYcddpXVH0bNy+fODq3ODsG+dcbOjDvYrWstUuywww47kWKHnRmxww477LDDDrvKurfZLTe9pZW8nO5oBjsz7mC3rrVIscMOO+xEih12ZtzJbrYlADvssMMOO+y+7oyjxyHy8dfZZrhcZDsefsXOjLvY5THsa1qLFDvssMNOpNhhZ0bssMMOO+yww66y+k1tuciWj0fMLqfLTXHdcjF2Zixmt661SLHDDjvsRIoddmbEDjvssMMOO+wq6zXTs81uMzv5GGx8HzszbmA3+uia1iLFDjvssBMpdtiZETvssMMOO+ywq6x+01seYs1HYPPQ6uxyuu7JCezMWMyuv0bx2tYixQ477LATKXbYmRE77LDDDjvssKusfpl4dmg1N719j8rl5ttWOuzMuIHdutYixQ477LATKXbYmRE77LDDDjvssKtml5veZodW8/d/Rw2uVcTOjBvYrWktUuywww47kWKHnRmxww477LDDDrvKGmWci21Zs8Ovx8U27My4g9261iLFDjvssBMpdtiZETvssMMOO+ywq2b3c9NbZJyHVnNT3PGxiPfHJm5HXLEz4yZ2s2PZj7UW6Zdid6kN7MyIHXbYYYcddthhhx122GG3okab3dJKLqrl5XPjy+mwM+MOdn3r2YWhv9dapNhhhx12IsUOOzNihx122GGHHXbV7DLjZqJ9Z3Y53cxUd04WOzNuZHdta5Fihx122IkUO+zMiB122GGHHXbYVdZrpmfbPNvnn7ucDjsz7mDXc/k+qd9rLVLssMMOO5Fih50ZscMOO+ywW8WutcbOjH31y8R5qVx+nodWX6KOm+awM+MOdutaixQ77LDDTqTYYWdG7LDDDjvssMOuskYGctk4N8XNDrUOzGBnxidgd01rkWKHHXbYiRQ77MyIHXbYYYcddthV1uiR17xU7mwbaC7KvX0LOzPuYNe3Pj5D/GhrkWKHHXbYiRQ77MyIHXbYYYcddthVs8vFsfGlcvk4xPsyc15OdxODnRk3sZstDz/WWqTYYYcddiLFDjszYocddthhhx12ldVfQpeLZLl8nGZmh1+7dymwM2Mxu3vbNx9rLVLssMMOO5Fih50ZscMOO+ywww676kp2uTludmh19uhr9y4FdmYsZreutUixww477ESKHXZmxA477LDDDjvsKus1y3y0NR97Pft5vGkOOzPuYDfavnlNa5Fihx122IkUO+zMiB12zzJVv/0DO+yww+5rs8u3S46LZL9ujsvfjxflsDPjLnZrWosUO+yww06k2GFnRuywww477LDDrnqqtHF2aDUX1b5FYYfdPnbrWosUO+yww06k2GFnRuywww477LDDrrL6Te25aDa7nC43xeVmuduSG3Zm3MBuXWuRYocddtiJFDvszIgddthhhx122FXWvaybmVx8y8Ov40112JlxB7ue17WtRfoV2OU/Sdhhhx122GGHHXYixQ477LDD7nln7De7zTbH5WJbPh6Rm+a6H7EzYzG7/nj2ta1Fih122GEnUuywMyN22GGHHXbYYVdZvY3ZI65nVnJx7k0Odmbcze7a1iLFDjvssBMpdtiZETvssMMOO+ywq6z3xx5+PbSah1TPDjbeeQ4FOzMWsVvXWqTYYYcddiLFDjszYocddthhhx121ZWb4jLr2aa53AwXm+SwM+MGdutaixQ77LDDTqTYYWdG7LDDDjvssFOVNdrslpvh0kaayUOuN8zYqQ3s1rVW2GGnsFPYYaewU9hhhx12ahe73PSWj7yePTJxNIWd2s3u2tZiww47hZ3CDjuFncIOO+ywU5V173GIWfYfu5wOO7WD3brWYsMOO4Wdwg47hZ3CDjvssFOV9XZ4dXyYdXY5Xf4+/677ETs1Yzc7Q/0gu9FH17QWG3bYKewUdtipHexmX8EOO+wUdtj9GezOHo1IC+3z9v009vbX2KlnYXdNa7Fhh53CTmGHncJOYYcddtipyuozzs1uaeCjj8Bip/axG/0Dek1rsWGHncJOYYedwk49S927Rh07hR12X6dGm90y8/uHVmeb5rBTu9jNni9+rLXYsMNOYaeww05hp7DDDjvsVDW7Wca52S0vo7t/+BU7tYvdmtZiww47hZ3CDjuFncIOO+ywU9XVnoeYbXqbbZqbPQ7bbfPEThWze22dy8PXtBYZdtip36r8fzjsFHbYYYedwk5hh536YPXPoMw2u+VzKWeX0906Y6c2sOuXe69trbDDTmGnsMNOYaewww477FRlvWX/41C5aJYGvkWlje7pV+zUjN2PH0vYrWstNuywU9gp7LBT2CnssMMOO1VZ//y3ZhmnjXwe4v7ldNipHexeW+cx7Gtaiw077BR2CjvsFHYKO+yww05VVr/ZLRfZZpfTNTu5aS4up8NObWC3rrXYsMNOYaeww05hp7DDDjvsVDW7s0Ors0dhZ49MYKf2slvTWmzYYaewU9hhp7BT2GGHHXZq13Lx7JHX+4dWbzfZjZeLsVMb2OVXrmktNuywU9gp7LBT2CnssMMOO1VZ/Wa3XDzLw6u5qJab446fY6d2sFvXWmzYYaewU9hhp7BT2GGHHXaqsvpL6HIxbXbZXC4Ljw+/Yqd2sHttPTuG/VhrsX0NditsYKewU9hhhx12CjvssMNOrarGbnZodbYNtP2ci23duxTYqVkdFng7Aw+y61v/fWlrkWGHncJOYYedwk5hhx122KnaNbv3yozTRm6Oy8W39vOtM3ZqA7t+2ffa1go77BR2Cjvs1A52eTzja7H751DPGfBzzogddthh92fM2C+m5aa3VrnpbbZpLkRhZ8YN7Na1Fil22GGHnUixw86M2GGHHXbYYYdd9VRnj0akjTQzfmQCOzPuYremtUixww477ESKHXZmxA477LDDDjvsKus1yzysOr5U7j3tfDRivE0UOzPuYDeqa1qLFDvssMNOpNhhZ0bssMMOO+yww66y+kW1tmiWh1rzEGs+/jreNIedGXexW9NapNhhhx12IsUOOzNihx122GGHHXbVy8Ut27PNcbPHYdvfDR6bwM6MxezWtRYpdthhh51IscPOjNhhhx122GGHXWX1Gc8OreamuTMrN2nYmXEDu3WtRYoddthhJ1LssDMjdthhhx122GFXzS43vZ09DpG/b6YGz6FgZ8YN7GbbNx9rLVLssMMOO5Fih50ZscMOO+ywww676ppdQpeb5XLxrX3eE34v7My4g92vH/36rPHvtRYpdthhh51IscPOjNhhhx122GGHXWX1h1E/e2g17bTFthtm7My4gd1ntm9+rrVIscMOO+xEih12ZsQOO+ywww477CprdNncX1HjxyHeKzfNHcVgZ8ZKdqPl4WtaixQ77LDDTqTYYWdG7LDDDjvssMOuml1mnI+/zi6ny0W24+FX7My4i93Zc8a/11qk2GGHHXYixQ47M2KHHXbYYbeK3ZrWIv1/n/Hesew8tNqsNBP5+yjszLiB3brWIsUOO+ywEyl22JkRO+ywww477LCrZne22S0vp/v54Mlgoe69D3Zm3MVuTWuRYocddtiJFDvszIgddthhhx122FVWv+ktD7HmI69nj7+2z99+ws6MO9j1y7/XthYpdthhh51IscPOjNhhhx122GGHXWX1i2qzQ6v5OEQeYs3Fudu1itiZcQO7da1Fih122GEnUuywMyN22GGHHXbYYVc9VR5mzUWz3BQ32zR351pF7MxYxG5da5Fihx122IkUO+zMiB122GGHHXbYVda9RyNys1xePnf/+9iZcQe7EZ9rWosUO+yww06k2GFnRuywww477LDDrprdz8chbv/7PWp2aLUttuWmudu1itiZcRO72TbOx1qLFDvssHuI3Qt22GGHHXbYYYedSLHDDrvP1WizW15GNzu0mo9GHC1hZ8Yd7PrWswtDf6+1SLHDDjvsRIoddmbEDjvssMMOO+yqp8qMm4n2ndnldDNT3f122Jlx9q/dQnZrWosUO+yww06k2GFnRuywww477LDDrrJGm9pyU9zs0Or9y+mwM+MOdutaixQ77LDDTqTYYWdG7LDDDjvssMOusvpFtZ83P8XjEPm4RLORx7qPm+awM+MOdutaixQ77LDDTqTYYWdG7LB7LnbH/1zEDjvssPt6M44MzC6bmz0ykdcxDrhgZ8aN7K5pLVLssMMOO5Fih50ZscMOO+ywww67yho98pqXyn1201z3pAR2Zixmt661SLHDDjvsRIoddmbEDjvssMMOO+yqp8pNb+NL5WaHVt9rcK0idmbcwG5Na5Fihx122IkUO+zMiB122GGHHXbYVVZ/CV0eZp3ZaJ/n94+Lc9iZcQe7e9s3H2st0q/AbnZ0HzvssMMOO+yww06k2GGHHXbYPeeMs01vMyu5KS7NdO9SYGfGU3ZxFvpBdutEixQ77LDDTqTYYWdG7LDDDjvssMOusg6b3W6fzS6hy89zc9zxc+zMuIPdaPvmNa1Fih122GEnUuywMyN22GGHHXYLbGBnxrvs8u2SZqB9Jx+PGF86l4dfsTPjLnZrWosUO+yww06k2GFnRuywww477LDDrrL6i8Y+emj1Y5fTYWfGHezWtRYpdthhh51IscPOjM/wnxTYmRE77LDD7s+ZcbTJLTe75WJaPvY63iyHnRl3sOv5XNtapNhhhx12IsUOOzNihx122GGHHXaV1RuYXUaXm+KS6XhTHXZm3MGu/+ja1iLFDjvssBMpdtiZETvssMMOO+ywq6x+s9uPyaHW2WVzaSatYGfGenb9R2fHsD/XWqRfid0Ldthhhx122GGHnUixww477LB7+hn7RbUfUR87tPpex0U57My4i92a1iLFDjvssBMpdtiZETvssMMOO+ywq6x+cSwXyWY28hBrHnIdXKuInRmL2K1rLVLssMMOO5Fih50ZscMOO+ywww676nqJagbODq3mYlv7ftcGOzMWs1vXWqTYYYcddiLFDjszYocddthhhx121eQy41xUy8vpZlaajVtn7My4gd261iLFDjvssBMpdtiZETvssMMOO+ywq6xfD6G+P+Z6djnd7O86UdiZsZhdz+Xa1iLFDjvssBMpdtiZETvssMMOO+ywq54qL5VrFl4m9bHL6bAz4w52r61n2zcfay1S7LDDDjuRYoedGbHDDjvssMMOu8rqN8XlYdbZ5XT5+/Z3cTwbOzNuYLeutUixww477ESKHXZmxA477LDDDjvsqtmdbXbL7PNyuvGmOezMuINdv+x7bWuRYocddtiJFDvszIgddthhh92qBRTszDiqfjPb2eMQedlcLsodZWFnxh3s7l2n+FhrkWKHHXbYiRQ77MyIHXbYYYcddthV1mizW6uPWhlvmsPOjDvYrWstUuywww47kWKHnRmxww477LDDDrtqdrOMZzZy81z7vC26de9SYGfGDezWtBYpdthhh51IscPOjNhhhx122GGHXXXNDrHmodW0ko/DHh9/xc6MO9itay1S7LDDDjuRYoedGbHDDjvssMMOu8rqH4uYbXbLR1/zMGsecr11xs6MG9itay1S7LDDDjuRYoedGbHDDjvssMMOu8rqN7vlpXKzxyG+RaWNThR2Zixmt661SLHDDjvsRIoddmbEDjvssMMOO+yq2c0yThuzzXPjxTnszLiL3ZrWIsUOO+ywEyl22JkRO+ywww477LCrZtcW03K23BzXfv8yqVicw86Mm9itaS1S7LDD7onY/UeAAQC0WMbVW6/g6wAAAABJRU5ErkJggg==);
+        background-size: 100% 100%;
+    }
+    #welcome,#gameover,#loading{
+        width:100%;
+        height:100%;
+        position: fixed;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        display: none;
+        z-index: 999;
+    }
+
+    #welcome{
+        background: rgba(255,255,255,.3);
+    }
+    #gameover{
+        background: rgba(255,255,255,.3);
+    }
+    p{
+        width: 90%;
+        left: 5%;
+        position: fixed;
+        top: 45%;
+        color: #fff;
+    }
+    #start{
+        width: 36%;
+        height: 60px;
+        line-height:60px;
+        text-align: center;
+        left: 33%;
+        position: fixed;
+
+        border: none;
+        outline: none;
+        bottom: 8%;
+        zoom: 0;
+        background: rgba(255,0,0,.9);
+        color:#fff;
+
+    }
+    #msg{
+        position: fixed;
+        top: 31%;
+        width: 100%;
+        left: 0px;
+        right: 0px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 700;
+        color: #000;
+    }
+    #restart{
+        width: 40%;
+        height: 40px;
+        line-height:40px;
+        text-align: center;
+        left:0px;
+        position: fixed;
+        background: rgba(255,0,0,1);
+        color:#fff;
+        color: #fff;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        bottom: 8%;
+        zoom: 0;
+    }
+    #link{
+        width: 40%;
+        height: 40px;
+        line-height:40px;
+        text-align: center;
+        right: 0px;
+        position: fixed;
+        background: rgba(255,0,0,1);
+        color:#fff;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        bottom: 8%;
+        zoom: 0;
+    }
+    #copy{
+        position: fixed;
+        bottom: 0px;
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        color: #f00;
+        z-index: 999;
+        background: rgba(255,255,255,0.5);
+    }
+</style>
+<script>
+function welcome(){
+    document.getElementById("welcome").style.display="block";
+    document.getElementById("gameover").style.display="none";
+    document.getElementById("loading").style.display="none";
+    //document.getElementById("myCanvas").style.display="none";
+}
+function gameover(){
+    loop=false;
+    var msg="我在高速路上行驶了"+parseInt(time2*car_speed/fps)+"m，你也来试试啊！";
+
+    shareTitle=msg;
+
+    document.getElementById("msg").innerHTML=msg;
+    document.getElementById("gameover").style.display="block";
+    document.getElementById("welcome").style.display="none";
+    document.getElementById("loading").style.display="none";
+    buttonLustTapTime=Date.parse(new Date());
+}
+function link(){
+    if(Date.parse(new Date())-buttonLustTapTime>800) {
+        window.location.href = "http://www.dobebox.com";
+    }
+}
+function init(){
+    player_w=90;
+    player_h=150;
+    //canvas
+    canvas_w=630;
+    canvas_h=960;
+    canvas=document.getElementById("myCanvas");
+    canvas.width=canvas_w;
+    canvas.height=canvas_h;
+    canvas.top = 0;
+    canvas.left = 0;
+    c = canvas.getContext('2d');
+    res_count=0;
+    resloaded=false;
+    fps=1000/16;
+    loop=false;
+    loadingRES();
+    backTime=0;
+    setInterval(looping,fps);
+    buttonLustTapTime=0;
+    initbuttons();
+
+    canvas.addEventListener('touchstart', function (e) {
+        if (loop) {
+            var touchobj = e.changedTouches[0] // reference first touch point (ie: first finger)
+            startx = parseInt(touchobj.clientX) // get x position of touch point relative to left edge of browser
+            player_to = "left";
+            e.preventDefault();
+        }
+    }, false);
+
+    canvas.addEventListener('click', function (e) {
+        if (loop) {
+            player_to = "left";
+            player_target_X = player_x-car_speed*2;
+            if(player_target_X<120){
+                player_target_X=120;
+            }
+            e.preventDefault();
+        }
+    }, false);
+
+    canvas.addEventListener('touchmove', function (e) {
+        if (loop) {
+            var touchobj = e.changedTouches[0] // reference first touch point (ie: first finger)
+            startx = parseInt(touchobj.clientX) // get x position of touch point relative to left edge of browser
+            player_to = "left";
+            e.preventDefault();
+        }
+    }, false);
+
+    canvas.addEventListener('touchend', function (e) {
+        if(loop){
+            player_to = "right";
+        }
+    }, false);
+    //
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        var icon="res/icon.png";
+        var url=document.location.href;
+        var urlArr=url.split("/");
+        var imgUrl="";
+        for(i=0; i<urlArr.length-1;i++){
+            imgUrl+=urlArr[i]+"/";
+        }
+        imgUrl+=icon;
+        shareLink=document.location.href;
+        shareTitle=document.title;
+        shareIcon="http://mmbiz.qpic.cn/mmbiz/ZBB7rRgWr0sQORlvCzyEqq72ibnm2ep0NbZs6hPLrh7arpjTia8aCwuRlz8brhuQUl7YEIxZeUTJlib2yicP6lXNbA/640";
+        // 发送给好友
+        WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+            WeixinJSBridge.invoke('sendAppMessage', {
+                "img_url":shareIcon,
+                "img_width": "100",
+                "img_height": "100",
+                "link": shareLink,
+                "desc": "",
+                "title": shareTitle
+            }, function (res) {
+                _report('send_msg', res.err_msg);
+            })
+        });
+        // 分享到朋友圈
+        WeixinJSBridge.on('menu:share:timeline', function (argv) {
+            WeixinJSBridge.invoke('shareTimeline', {
+                "img_url":shareIcon,
+                "img_width": "100",
+                "img_height": "100",
+                "link": shareLink,
+                "desc": "",
+                "title": shareTitle
+            }, function (res) {
+                _report('timeline', res.err_msg);
+            });
+        });
+    });
+}
+function loadedOne(){
+    res_count++;
+}
+function loadingRES(){
+    document.getElementById("loading").style.display="block";
+    document.getElementById("welcome").style.display="none";
+    //document.getElementById("myCanvas").style.display="none";
+    document.getElementById("gameover").style.display="none";
+
+    car_img=new Image();
+    player_img=new Image();
+
+
+
+
+    car_img.onload=loadedOne;
+
+    player_img.onload=function(){
+        res_count++;
+        c.clearRect(0, 0,canvas_w,canvas_h);
+        c.drawImage(this,0,0,player_w,player_h);
+        player_data = c.getImageData(0,0,player_w,player_h).data;
+        c.clearRect(0, 0,canvas_w,canvas_h);
+    }
+
+    player_img.src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAACWCAMAAABpXG//AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABhQTFRFwVlZsSwsrycnbBwc23Fx/wAAzDMz////NEyzfwAAAAh0Uk5T/////////wDeg71ZAAABLUlEQVR42uzb0Y7CIBCF4Zkp0vd/4xUmEdZUTWCw281/rrzxs0mxGU6o7PekfAtNLugulb5BP+hUEkw7KiXht9FZK9lKLI9Gt6dUVHQVrdDQ0N+ns5asoWugoaEDaFtH57AYNDQ0NPSFaG103Z7KFhCXDPocWiSKLtLziKOTl15LED2cnqC/SNfCSIfjXz+ku98eypv5GhoaGhr6z9OSQiPQ59AtE2BLozV68Sn/RmhoaOhL0rO7XWH7fzJtrVmYuI2PZsHo+f4bXReHr5XJNKkfJ21JNR5NGzQ0NDT0Otqz5JgP9CXoTwccx+mPxzKhD3u+EFqPxkkde3K8HCfNi8uIx9OL+Rq60LaK9o+prR4dLy3s94Ym+Zsn3cLcR9P1IdK91NJdNfQy+keAAQAXa+B8DrdOfgAAAABJRU5ErkJggg==";
+    car_img.src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAACWCAMAAABpXG//AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABhQTFRFZn8kjbEsuv8Aiq8nVmwcvttxo8wz////bs7DEQAAAAh0Uk5T/////////wDeg71ZAAABb0lEQVR42uzb4a7CIAwF4HI7uvd/47uW3TuCTE0pmuk5P4wz8cvChkJhtG7JP8FRdCXQf8mFzppo2lJo0QxY0qTQrFk0JN6kpYmhlLaXRHYcRu8oaNCgX05L0syhLQQa9HfRNEif9EbN8FlrWnoUbVsFNGjQoEFfkNYpZFpoOEuyGS4fdC50QIzO82i5PF1dRr/avYz76MnO3U+XSkV/YBZBM+hnaLLpn7+T67elfxnLHZTduTMlHaUJNGjQoEFPpjkHh6fRAvq8rds1Jt+5HmEMFkCDBg0adGe2K/6aBSoLb6dtoWr7ux+4jIvo97kUGVBC/AC6bmvbc8AUkJ06br7BfU83C7zRy8bdqjto0KBBfytN8+h9NBG9F+f4dMoOItBx9KMNjn764bZM0GG98Q5dxoD2zvcbxf9JzXCSbyqX7pzUr8NouS7N9shCmtHWUuoBx1xjoEpeLXuXY3vypOoyqzcVkqqHWkC/gv4VYACBBPDij/hcYwAAAABJRU5ErkJggg==";
+}
+function checking(){
+
+}
+function restart(){
+    if(Date.parse(new Date())-buttonLustTapTime>800) {
+        tangetX = 0;
+        tangetT = 0;
+        player_x = canvas_w-player_w-120;
+        player_y = canvas_h - player_h - 60;
+        win = false;
+        player_target_X=0;
+        player_setp = 30;
+        car_speed=10;
+        player_time = 0;
+        fps = 1000 / 32;
+        loopTime = 0;
+        player_to = "right";
+        makeCarTime = 0;
+        backgroundY = 0;
+        m=0;
+        time2=0;
+        //
+        //document.getElementById("myCanvas").style.display="block";
+        document.getElementById("welcome").style.display = "none";
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("gameover").style.display = "none";
+        //
+        time = 0;
+        cars = new Array();
+        carNext = 0;
+        loop = true;
+    }
+}
+
+function looping(){
+
+    if(loop){
+        //
+        backgroundY+=10;
+
+        document.getElementById("myCanvas").style.backgroundPositionY=backgroundY+"px";
+
+        loopTime+=fps;
+        c.clearRect(0, 0,canvas_w,canvas_h);
+        for(i in cars){
+
+            c.drawImage(car_img,cars[i][0],cars[i][1], player_w, player_h);
+
+        }
+        player();
+        var data = c.getImageData(player_x,player_y,player_w,player_h).data;
+        var step=0;
+        for (var ii = 3; ii < data.length; ii += 4) {
+            if(loop){
+                step++;
+                if(step==1){
+                    if (data[ii]>0 && player_data[ii] > 0) {
+                        ii=data.length;
+                        gameover();
+                        if(data[ii-3]==255 && data[ii-2]==153 && data[ii-1]==0){
+
+                        }
+                        else if(data[ii-3]==255 && data[ii-2]==0 && data[ii-1]==0){
+                            ii=data.length;
+                            gameover();
+                        }
+                        else if(data[ii-3]==0 && data[ii-2]==153 && data[ii-1]==255){
+                            win=true;
+                            ii=data.length;
+                            gameover();
+                        }
+
+                        break;
+                    }
+                    step=0;
+                }
+            }
+        }
+
+
+        //
+        c.clearRect(0, 0,canvas_w,canvas_h);
+        //c.drawImage(bg_img,0,0,canvas_w,canvas_h);
+        makeCarTime+=fps;
+
+        if(makeCarTime>=1000){
+            //cars.push([canvas_w-player_w-60],-1*player_h]);
+            makeCarTime=0;
+        }
+        var top=canvas_h;
+        for(i in cars){
+            if(cars[i][1]<top){
+                top=cars[i][1];
+            }
+        }
+        var tmp_y=Math.floor(Math.random() * 80)+player_h*1.5;
+        if(top>tmp_y){
+            var r=Math.floor(Math.random() * 3)+1;
+
+            if(r==1){
+                cars.push([120,-1*tmp_y]);
+            }
+            if(r==2){
+                cars.push([270,-1*tmp_y]);
+            }
+            if(r==3){
+                cars.push([canvas_w-player_w-120,-1*tmp_y]);
+            }
+        }
+        for(i in cars){
+            cars[i][1]+=car_speed;
+            c.drawImage(car_img,cars[i][0],cars[i][1], player_w, player_h);
+            if(cars[i][1]>canvas_h+player_h+100){
+                cars.splice(i,1);
+            }
+        }
+
+
+        c.drawImage(player_img, player_x, player_y, player_w, player_h);
+        time+=fps;
+        time2++;
+        if(time==1000){
+            time=0;
+            player_time++;
+            car_speed+=2;
+        }
+        c.font="50px Georgia";
+        c.fillStyle="#f00";
+        c.fillText(parseInt(time2*car_speed/fps)+"m",canvas_w/2-15,60);
+
+        //
+
+        //
+    }
+    //checking res loaded?
+    if(resloaded==false){
+        if(res_count==2){
+            welcome();
+            resloaded=true;
+        }
+    }
+}
+function player(){
+    if(player_to=="right"){
+        player_x+=car_speed;
+        if(player_x>=canvas_w-player_w-120){
+            //player_to="left";
+            player_x=canvas_w-player_w-120;
+        }
+    }
+    if(player_to=="left"){
+        player_x-=car_speed;
+        if(player_x<=120){
+            //player_to="right";
+            player_x=120;
+        }
+    }
+
+}
+window.addEventListener('load',init,false);
+function initbuttons(){
+    document.querySelector("#start").addEventListener('touchstart',restart);
+    document.querySelector("#start").addEventListener('click',restart);
+    document.querySelector("#restart").addEventListener('touchstart',restart);
+    document.querySelector("#restart").addEventListener('click',restart);
+    document.querySelector("#link").addEventListener('touchstart',link);
+    document.querySelector("#link").addEventListener('click',link);
+}
+</script>
+</head>
+<body>
+<div id="loading">loading</div>
+<div id="welcome">
+    <div id="start" ontouchstart="restart();">猛戳此处开始</div>
+</div>
+<div id="gameover">
+    <p id="msg"></p>
+    <div id="restart" ontouchstart="restart();">再玩一局！</div>
+    <div id="link" ontouchstart="link();">更多游戏</div>
+</div>
+<canvas id="myCanvas"></canvas>
+<div id="copy">逗比盒子</div>
+<span id="tongji" style="display: none;"><script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fc961dabb84f92a11e4c69829d2968259' type='text/javascript'%3E%3C/script%3E"));
+</script><script src=" http://hm.baidu.com/h.js?c961dabb84f92a11e4c69829d2968259" type="text/javascript"></script><a href="http://tongji.baidu.com/hm-web/welcome/ico?s=c961dabb84f92a11e4c69829d2968259" target="_blank"><img border="0" src="http://eiv.baidu.com/hmt/icon/21.gif" width="20" height="20"></a></span>
+</body>
+</html>

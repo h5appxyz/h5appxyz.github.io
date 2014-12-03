@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="email=no" name="format-detection"/>
+<title>疯狂点击 乌鸦出品</title>
+<style>
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+    body{
+        text-align: center;
+        background: rgba(30,30,130,0.5);
+    }
+    #v{
+        width: 100%;
+        font-size: 28px;
+    }
+			#canvas{
+				width:300px;
+				height:300px;
+				margin:0 auto;
+                margin-top: 10px;
+                background: yellow;
+                border-radius: 100%;
+                line-height: 300px;
+                color: #fff;
+                font-size: 80px;
+			}
+            .color{
+                display:block;
+                float: left;
+                clear: none;
+                -moz-box-shadow:0 0 0 0.1em #fff inset;
+                -webkit-box-shadow:0 0 0 0.1em #fff inset;
+                box-shadow:0 0 0 0.1em #fff inset;
+                color: #fff;
+                border-radius: 50%;
+            }
+    #time{
+        margin:10px 0px 0px 0px;
+        width: 100%;
+        height: 20px;
+        line-height: 20px;
+    }
+        #gameover,#gamestart{
+        position: fixed;
+        z-index: 999;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        background: rgba(0,0,0,0.8);
+        display: none;
+    }
+    #gamestart{
+        display: block;
+    }
+ .msg{
+        position:absolute;
+        height: 10%;
+        left: 10%;
+        right: 10%;
+        width: 80%;
+        height: auto;
+        top: 5%;
+        bottom: 5%;
+        border-radius: 10px;
+        font-size: 28px;
+        font-weight: 700;
+        background: rgba(255,0,0,0.5);
+        color: #fff;
+    }
+    #gameover button,#gamestart button{
+        position:absolute;
+        height: 10%;
+        left: 25%;
+        width: 50%;
+        right: 25%;
+        bottom: 10%;
+        border-radius: 30px;
+        font-size: 18px;
+        font-weight: 700;
+        background: #fff;
+    }
+    p{
+        width: 100%;
+        margin-top: 10px;
+        
+        
+    }
+    p span{
+        font-weight: 900;
+    }
+		</style>
+		<script>
+            var time=21;
+            var v=0;
+            var loop=false;
+            function gameover(){
+                document.getElementById("gameover").style.display="block";
+                document.title="我20秒点击了"+v+"次，点击一次才用"+(21/v)+"秒！";
+                document.getElementById("clicknum").innerHTML=v;
+                document.getElementById("clicks").innerHTML=(v/21).toFixed(2);
+                document.getElementById("sclick").innerHTML=(21/v).toFixed(2);
+                
+                select.style.background="#f00";
+            }
+            function restart(){
+                document.getElementById("gameover").style.display="none";
+                document.getElementById("gamestart").style.display="none";
+                v=0;
+                time=21;
+                loop=true;
+                document.getElementById("canvas").innerHTML=v;
+            }
+            function onclick(e){
+            	
+                v++;
+                document.getElementById("canvas").innerHTML=v;
+                var r=Math.floor(Math.random() * 253)+1;
+                var g=Math.floor(Math.random() * 253)+1;
+                var b=Math.floor(Math.random() * 253)+1;
+                var a=Math.floor(Math.random() * 1)+0.5;
+                e.style.backgroundColor="rgba("+r+","+g+","+b+",1)";
+                
+            }
+            
+			window.onload = function() {
+				document.getElementById("canvas").addEventListener('touchstart', function (e) {
+        var touchobj = e.changedTouches[0] // reference first touch point (ie: first finger)
+        startx = parseInt(touchobj.clientX) // get x position of touch point relative to left edge of browser
+        starty = parseInt(touchobj.clientY) // get x position of touch point relative to left edge of browser
+        //statusdiv.innerHTML = 'Status: touchstart<br /> ClientX: ' + startx + 'px'
+        onclick(this);
+        e.preventDefault()
+    }, false);
+
+    document.getElementById("canvas").addEventListener('touchmove', function (e) {
+        var touchobj = e.changedTouches[0] // reference first touch point for this event
+        
+        //gameCtrl.player.x+=distX;
+        //gameCtrl.player.y+=distY;
+        //statusdiv.innerHTML = 'Status: touchmove<br /> Horizontal distance traveled: ' + dist + 'px'
+        e.preventDefault()
+    }, false);
+
+    document.getElementById("canvas").addEventListener('touchend', function (e) {
+        var touchobj = e.changedTouches[0] // reference first touch point for this event
+        //statusdiv.innerHTML = 'Status: touchend<br /> Resting x coordinate: ' + touchobj.clientX + 'px'
+        var distX = parseInt(touchobj.clientX) - startx;
+        var distY = parseInt(touchobj.clientY) - starty;
+        var tmp=0;
+        if (distX > document.body.scrollWidth/3) {
+           //right
+        }
+        if (distX < -document.body.scrollWidth/3) {
+           //left
+        }
+        if (distY > document.body.scrollWidth/3) {
+            //down
+        }
+        if (distY < -document.body.scrollWidth/3) {
+           //up
+        }
+        e.preventDefault()
+    }, false);
+				//
+
+                setInterval(function(){
+                    
+                    if(loop){
+                        time--;
+                        document.getElementById("time").innerHTML="剩余时间 <b>"+time+"</b> 秒";
+                        if(time<9){
+                            document.getElementById("time").style.color="#f00";
+                        }else{
+                            document.getElementById("time").style.color="blue";    
+                        }
+                        if(time==0){
+                            loop=false;
+                            gameover();
+                        }
+                    }
+                    
+                    
+                },1000);
+			}
+		</script>
+	</head>
+	<body>
+        <div id="time"></div>
+		<div id="canvas">
+			
+		</div>
+        <div style="margin:10px 0px 0px 0px;line-height:25px;">
+            <p>乌鸦出品 <script language="javascript" type="text/javascript" src="http://js.users.51.la/17228045.js"></script>
+<noscript><a href="http://www.51.la/?17228045" target="_blank"><img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/17228045.asp" style="border:none" /></a></noscript></p>
+        </div>
+        <div id="gameover">
+            <div class="msg">
+                <p>右上角分享战果吧</p>
+                <p>20秒点击<span id="clicknum"></span>次</p>
+                <p>平均<span id="clicks"></span>次/秒</p>
+                <p>平均<span id="sclick"></span>秒/次</p>
+                
+            </div>
+            <button onclick="restart()">重新开始。</button>
+        </div>
+        <div id="gamestart">
+            <div class="msg">
+                <p>玩法：</p>
+                <p>以最快的速度点击带颜色的圆形</p>
+            </div>
+            <button onclick="restart()">开始游戏！</button>
+        </div>
+        
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta charset="UTF-8">
+    <title>强迫症头像生成器 乌鸦作品</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="email=no" name="format-detection"/>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        body{
+            text-align: center;
+        }
+        h2{
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+        }
+        input{
+            width: 200px;
+            height: 40px;
+            line-height: 40px;
+            margin: 0 auto;
+        }
+        #canvas,#save{
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+        }
+        #save,#msg{
+            display: none;
+        }
+        p{
+            width: 90%;
+            margin: 0 auto;
+            text-align: left;
+        }
+        button{
+            width: 30px;
+            height: 30px;
+            display: inline-block;
+        }
+        #footer{
+            width: 100%;
+            bottom: 0px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            color: #000;
+            position: fixed;
+            z-index: 999;
+        }
+    </style>
+    <script>
+        function draw(){
+            ctx.clearRect(0,0,mycanvas.width,mycanvas.height);
+            ctx.drawImage(img,0,0,mycanvas.width,mycanvas.height);
+
+            ctx.beginPath();
+            ctx.arc(165,36,35, 0, Math.PI*2, true);
+            ctx.fillStyle = "#f00";
+            ctx.fill();
+        }
+        function text(n){
+            draw();
+            // 设置字体
+            ctx.font = "Bold 60px Arial";
+            // 设置对齐方式
+            ctx.textAlign = "center";
+            // 设置填充颜色
+            ctx.fillStyle = "#fff";
+            // 设置字体内容，以及在画布上的位置
+            ctx.fillText(n,165,57);
+            document.getElementById("save").src=mycanvas.toDataURL("image/png");
+            document.getElementById("mycanvas").style.display="none";
+            document.getElementById("save").style.display="block";
+            document.getElementById("msg").style.display="block";
+        }
+        function upload(event){
+            document.getElementById("mycanvas").style.display="block";
+            document.getElementById("save").style.display="none";
+            document.getElementById("msg").style.display="none";
+            var files = event.target.files,file;
+            if (files && files.length > 0) {
+                file = files[0];
+                try {
+                    // Get window.URL object
+                    var URL = window.URL || window.webkitURL;
+                    var imgURL = URL.createObjectURL(file);
+                    //showPicture.src = imgURL;
+
+                    img = new Image();
+                    img.onload = function() {
+
+                        //
+
+                        //
+                        text(2);
+                        //console.log(mycanvas.toDataURL("image/png"));
+                    }
+                    img.src=imgURL;
+                    URL.revokeObjectURL(imgURL);
+                }
+                catch (e) {
+                    console.log(e)
+                }
+            }
+        }
+        function down(){
+            window.location.href=mycanvas.toDataURL("image/png");
+        }
+        function load(){
+            var takePicture = document.querySelector("#take-picture");
+            mycanvas=document.getElementById('mycanvas');
+            mycanvas.width=200;
+            mycanvas.height=200;
+            mycanvas.top=0;
+            mycanvas.left=0;
+            ctx=mycanvas.getContext('2d');
+            //
+            takePicture.onchange = upload;
+            //
+        }
+        window.addEventListener("load",load,false);
+    </script>
+</head>
+<body>
+<h2>强迫症头像生成器</h2>
+<input type="file" id="take-picture" accept="image/*">
+<div id="canvas">
+    <canvas id="mycanvas"></canvas>
+    <img id="save" src="" width="200" height="200">
+</div>
+<div id="msg">
+    <p>长按图片，保存图片。如果保存失败，请右上角用浏览器打开。</p>
+    <p>如果你觉得这个工具好用，请点击右上角，分享到朋友圈。让更多的人受益。</p>
+    <p><button onclick="text(1);">1</button>
+    <button onclick="text(2);">2</button>
+    <button onclick="text(3);">3</button>
+        <button onclick="text(4);">4</button>
+        <button onclick="text(5);">5</button>
+        <button onclick="text(6);">6</button>
+        <button onclick="text(7);">7</button>
+        <button onclick="text(8);">8</button>
+        <button onclick="text(9);">9</button></div>
+<div id="footer">乌鸦作品<span style="display:none;"><script language="javascript" type="text/javascript" src="http://js.users.51.la/17264781.js"></script></span></div>
+</body>
+</html>

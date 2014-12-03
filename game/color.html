@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="email=no" name="format-detection"/>
+<title>测试你的“色”商 乌鸦出品 color</title>
+<style>
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+    body{
+        text-align: center;
+    }
+    #v{
+        width: 100%;
+        font-size: 28px;
+    }
+			#canvas{
+				width:300px;
+				height:300px;
+				margin:0 auto;
+                margin-top: 10px;
+			}
+            .color{
+                display:block;
+                float: left;
+                clear: none;
+                -moz-box-shadow:1px 1px 1px #fff inset; 
+                -webkit-box-shadow:1px 1px 1px #fff inset; 
+                box-shadow:1px 1px 1px #fff inset; 
+            }
+		</style>
+		<script>
+            var blocks=1;
+            var next=0;
+            var n=30;
+            var wh=0;
+            function init(){
+                next++;
+                n-=1;
+                
+                if(next==6){
+                    next=9;
+                }
+                if(blocks<=81){
+                    wh=300/(next+1);
+                    blocks=(next+1)*(next+1);
+                }
+                document.getElementById("v").innerHTML="第 "+next+" 关";
+                document.getElementById("canvas").innerHTML="";
+                var r=Math.floor(Math.random() * 253)+1;
+                var g=Math.floor(Math.random() * 253)+1;
+                var b=Math.floor(Math.random() * 253)+1;
+                var a=Math.floor(Math.random() * 1)+0.5;
+                for(var i=0;i<blocks;i++){
+                    
+                    var e=document.createElement("div");
+                    e.setAttribute("class","color");
+                    e.setAttribute("data-color","#f00");
+                    e.style.width=wh+"px";
+                    e.style.height=wh+"px";
+                    e.style.background="rgba("+r+","+g+","+b+","+1+")";
+                    //e.setAttribute("select","yes");
+                    
+                    document.getElementById("canvas").appendChild(e);
+                }
+                var tmp=Math.floor(Math.random() * blocks);
+                var es=document.getElementsByClassName("color");
+                r-=n;
+                g-=n;
+                b-=n;
+                es[tmp].style.background="rgba("+r+","+g+","+b+","+1+")";
+                es[tmp].addEventListener("touchend",init);
+                
+            }
+            
+			window.onload = function() {
+				init();
+				window.addEventListener('touchstart', function (e) {
+        var touchobj = e.changedTouches[0] // reference first touch point (ie: first finger)
+        startx = parseInt(touchobj.clientX) // get x position of touch point relative to left edge of browser
+        starty = parseInt(touchobj.clientY) // get x position of touch point relative to left edge of browser
+        //statusdiv.innerHTML = 'Status: touchstart<br /> ClientX: ' + startx + 'px'
+        e.preventDefault()
+    }, false);
+
+    window.addEventListener('touchmove', function (e) {
+        var touchobj = e.changedTouches[0] // reference first touch point for this event
+        
+        //gameCtrl.player.x+=distX;
+        //gameCtrl.player.y+=distY;
+        //statusdiv.innerHTML = 'Status: touchmove<br /> Horizontal distance traveled: ' + dist + 'px'
+        e.preventDefault()
+    }, false);
+
+    window.addEventListener('touchend', function (e) {
+        var touchobj = e.changedTouches[0] // reference first touch point for this event
+        //statusdiv.innerHTML = 'Status: touchend<br /> Resting x coordinate: ' + touchobj.clientX + 'px'
+        var distX = parseInt(touchobj.clientX) - startx;
+        var distY = parseInt(touchobj.clientY) - starty;
+        var tmp=0;
+        if (distX > document.body.scrollWidth/3) {
+           //right
+        }
+        if (distX < -document.body.scrollWidth/3) {
+           //left
+        }
+        if (distY > document.body.scrollWidth/3) {
+            //down
+        }
+        if (distY < -document.body.scrollWidth/3) {
+           //up
+        }
+        e.preventDefault()
+    }, false);
+				//
+
+			}
+		</script>
+	</head>
+	<body>
+		<div id="v"></div>
+		<div id="canvas">
+			
+		</div>
+        <div style="margin:10px 0px 0px 0px;line-height:25px;">
+            <p>乌鸦没创意，只能跟风，好无聊啊...</p>
+            <p>什么时候能写出受欢迎的小游戏呢？</p>
+            <p>好捉急啊，加我微信：daxiongbeijing2011</p>
+        </div>
+        
+</body>
+</html>
