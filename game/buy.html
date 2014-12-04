@@ -202,7 +202,7 @@ function gameover(i){
 }
 function link(){
     if(Date.parse(new Date())-buttonLustTapTime>800) {
-        window.location.href = "http://www.dobebox.com";
+        window.location.href = "http://www.h5app.xyz";
     }
 }
 function init(){
@@ -213,8 +213,7 @@ function init(){
     initbuttons();
     welcome();
     playerTime=0;
-    var tj=new Image();
-    tj.src="http://img.users.51.la/17388441.asp";
+
     //
     setInterval(looping,1000/16);
     setInterval(time,1000);
@@ -229,7 +228,7 @@ function init(){
         imgUrl+=icon;
         shareLink=document.location.href;
         shareTitle=document.title;
-        shareIcon="http://www.dobebox.com/game/buy/icon.png";
+        shareIcon="http://www.h5app.xyz/game/buy/icon.png";
         // 发送给好友
         WeixinJSBridge.on('menu:share:appmessage', function (argv) {
             WeixinJSBridge.invoke('sendAppMessage', {
@@ -328,6 +327,12 @@ function click(){
     <div id="hand"></div>
     <div id="knife"></div>
 </div>
-<div id="copy">逗比盒子</div>
+<div id="copy">www.h5app.xyz</div>
+<span style="display: none">
+    <script type="text/javascript">
+        var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F272978c2afc299230ef0bf5ae8789554' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</span>
 </body>
 </html>

@@ -140,7 +140,7 @@ function gameover(){
 }
 function link(){
     if(Date.parse(new Date())-buttonLustTapTime>800) {
-        window.location.href = "http://www.dobebox.com";
+        window.location.href = "http://www.h5app.xyz";
     }
 }
 function init(){
@@ -230,7 +230,7 @@ function init(){
         imgUrl+=icon;
         shareLink=document.location.href;
         shareTitle=document.title;
-        shareIcon="http://www.dobebox.com/game/spider/icon.png";
+        shareIcon="http://www.h5app.xyz/game/spider/icon.png";
         // 发送给好友
         WeixinJSBridge.on('menu:share:appmessage', function (argv) {
             WeixinJSBridge.invoke('sendAppMessage', {
@@ -467,9 +467,12 @@ function initbuttons(){
     <div id="link" ontouchstart="link();">更多游戏</div>
 </div>
 <canvas id="myCanvas"></canvas>
-<div id="copy">逗比盒子</div>
+<div id="copy">www.h5app.xyz</div>
 <span id="tongji" style="display: none;">
-    <img src="http://img.users.51.la/17388441.asp">
+    <script type="text/javascript">
+        var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F272978c2afc299230ef0bf5ae8789554' type='text/javascript'%3E%3C/script%3E"));
+    </script>
 </span>
 </body>
 </html>
