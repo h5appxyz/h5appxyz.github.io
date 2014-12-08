@@ -3,4 +3,5 @@ CACHE MANIFEST
 /index.html
 #NETWORK:
 FALLBACK:
-/* /404.html
+site/images images/offline.jpg
+/*.html /404.html
