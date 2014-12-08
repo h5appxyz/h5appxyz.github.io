@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta charset="UTF-8">
+    <title>北京卫视</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+</head>
+<body>
+<!--
+<embed width="100%" height="300" src="http://www.radio366.com/tv/images/player.swf" type="application/x-shockwave-flash"
+       flashvars="streamer=rtmp://360skylive.wasu.cn/live&amp;file=bjws&amp;type=video&amp;autostart=true&amp;controlbar=bottom&amp;caption=false&amp;"
+       allowfullscreen="true" allowscriptaccess="always">
+       -->
+<embed width="100%" height="300" src="player.swf" type="application/x-shockwave-flash"
+       flashvars="streamer=rtmp://360skylive.wasu.cn/live&amp;file=bjws&amp;type=video&amp;autostart=true&amp;controlbar=bottom&amp;caption=false&amp;"
+       allowfullscreen="true" allowscriptaccess="always">
+    <div id="swf2js"></div>
+    <script type="text/javascript">
+        var swfurl="player.swf?streamer=rtmp://360skylive.wasu.cn/live&file=bjws&type=mp4&autostart=true";
+        swf2js.load(swfurl,{
+            //width: int, // default 100%
+           // height: int, // default 100%
+            isSpriteSheet: false // default false
+        });
+    </script>
+
+    <video id='video' width='640' height='360' preload="auto" controls>
+        <source src="rtmp://360skylive.wasu.cn/live&amp;file=bjws&amp;type=video&amp;autostart=true&amp;controlbar=bottom&amp;caption=false&amp;" type="rtmp/mp4">
+    </video>
+
+    <script src="soundmanager2.js"></script>
+    <script>
+        //http://www.schillmania.com/projects/soundmanager2/demo/api/
+        var count = 0;
+        var pos = -1;
+        var s = soundManager.createSound({
+            url: '../mpc/audio/CHINA_1.mp3',
+            whileplaying: function() {
+                if (count == 0) {
+                    if (this.position > 1000) {
+                        this.pause();
+                        pos = this.position;
+                        count++;
+                        this.resume();
+                    }
+                } else if (count == 1) {
+                    soundManager._writeDebug('old position: ' + pos);
+                    soundManager._writeDebug('new position: ' + this.position);
+                    // See that this.position is less than pos!
+                    count++;
+                }
+            },
+            onfinish: function() {
+                this.destruct();
+            }
+        });
+        s.play();
+
+        //
+        //play once
+        var s = soundManager.createSound({
+            url: '../mpc/audio/AMB_HHOP.mp3'
+        });
+        s.play();
+        s.destruct();
+        //onload
+        var preload = soundManager.createSound({
+            id: 'preloadSound',
+            url: '../mpc/audio/AMB_HHOP.mp3'
+        });
+
+        // load the sound ahead of time
+        preload.load({
+            // and start playing it at onload
+            onload: function() {
+                this.play();
+            }
+        });
+
+        ///
+        var mySound = soundManager.createSound({
+            url: '../mpc/audio/CHINA_1.mp3'
+        });
+        mySound.play();
+
+    </script>
+
+    <div style="display: none;">
+    <a href="http://www.51.la/?17553063" target="_blank"><img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/17553063.asp" style="border:none" /></a>
+</div>
+</body>
+</html>
