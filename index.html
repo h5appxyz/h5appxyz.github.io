@@ -1,79 +1,85 @@
+
 <!DOCTYPE html>
-<html manifest="offline.appcache">
-<head lang="en">
-    <meta charset="UTF-8">
-    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>万能64位文件编码</title>
+	<meta name="author" content="乌鸦" />
+	<meta name="copyright" content="乌鸦" />
+	<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+	<meta content="yes" name="apple-mobile-web-app-capable"/>
+	<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+	<meta content="telephone=no" name="format-detection"/>
+	<meta content="email=no" name="format-detection"/>
+	<style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        .center{
+            position:absolute;  
+            top:50%;            
+            left:50%; 
+            margin: 0 auto;
+            width:50%;                             
+            height:50%;                           
+            z-index:1;
+        }
+        #m{ 
+            position: relative; 
+            top: -90%;
+            left: -90%;
+            width:180%;                             
+            height:180%;                           
+            z-index:99;
+            text-align: left;
+        }
+        #result{
+            width: 100%;
+            height: 90%;
+        }
+    </style>
+	<script>
+		window.onload=function(){
+			function readFile(){ 
+				var file = this.files[0]; 
+
+				/*
+				//这里我们判断下类型如果不是图片就返回 去掉就可以上传任意文件 
+				if(!/image\/\w+/.test(file.type)){ 
+				alert("请确保文件为图像类型"); 
+				return false; 
+				}
+				*/
+				var reader = new FileReader(); 
+				reader.readAsDataURL(file); 
+				reader.onload = function(e){ 
+					result.innerHTML =this.result;
+                    if(this.result.indexOf("data:image")!=-1){
+                        //img_area.innerHTML = '<div class="sitetip">图片img标签展示：</div><img src="'+this.result+'" alt=""/>'; 
+                    }
+				} 
+			}
+			var input=document.getElementById("demo_input"); 
+			var result=document.getElementById("result"); 
+			var img_area = document.getElementById("img_area"); 
+			if (typeof(FileReader)==='undefined' ){ 
+				result.innerHTML="抱歉，你的浏览器不支持 FileReader，请使用现代浏览器操作！"; 
+				input.setAttribute('disabled','disabled' ); 
+			}else{ 
+				input.addEventListener('change',readFile,false );
+			} 
+		}
+    </script>
 </head>
-<script>
-    var _hmt = _hmt || [];
-    (function() {
-        var hm = document.createElement("script");
-        hm.src = "//hm.baidu.com/hm.js?2d8f8ceef4d2425854160687d80c632f";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
-    var appCache = window.applicationCache;
-
-    function logEvent(e) {
-
-        console.log(e);
-
-    }
-    function logError(e) {
-
-        console.log("error " + e);
-
-    };
-
-    appCache.addEventListener('cached', logEvent, false);
-
-    appCache.addEventListener('checking', logEvent, false);
-
-    appCache.addEventListener('downloading', logEvent, false);
-
-    appCache.addEventListener('error', logError, false);
-
-    appCache.addEventListener('noupdate', logEvent, false);
-
-    appCache.addEventListener('obsolete', logEvent, false);
-
-    appCache.addEventListener('progress', logEvent, false);
-
-    appCache.addEventListener('updateready', function (e) {
-
-        appCache.swapCache();
-
-        window.location.reload();
-
-    }, false);
-</script>
 <body>
-<h1>h5app</h1>
-<p>H5app is so easy to use that it’s hard to explain.</p>
-<h2>good websites</h2>
-<ul>
-    <li><a href="http://codepen.io/" target="_blank">http://codepen.io/</a></li>
-    <li><a href="http://subtlepatterns.com/" target="_blank">backgrounds</a></li>
-    <li><a href="https://github.com/rstacruz/nprogress" target="_blank">nprogress</a></li>
-    <li><a href="https://github.com/Prinzhorn/skrollr" target="_blank">skrollr</a></li>
-    <li><a href="http://www.requirejs.org/" target="_blank">requirejs</a></li>
-    <li><a href="http://jekyllcn.com/docs/home/" target="_blank">jekyllcn</a></li>
-    <li><a href="http://www.findaliens.com" target="_blank">findaliens</a></li>
-    <li><a href="https://github.com/blasten/turn.js" target="_blank">turn.js</a></li>
-    <li><a href="https://github.com/nnnick/Chart.js" target="_blank">Chart.js</a></li>
-    <li><a href="https://github.com/mozilla/pdf.js" target="_blank">pdf.js</a></li>
-    <li><a href="https://github.com/mozilla/firefox-ios" target="_blank">firefox ios</a></li>
-    <li><a href="https://github.com/matthewhudson/device.js" target="_blank">device.js</a></li>
-    <li><a href="https://github.com/videojs/video.js" target="_blank">video.js</a></li>
-    <li><a href="https://github.com/NUKnightLab/TimelineJS" target="_blank">TimelineJS</a></li>
-    <li><a href="https://github.com/hakimel/stroll.js" target="_blank">stroll.js</a></li>
-    <li><a href="https://github.com/hakimel/css/tree/master/monocle" target="_blank">monocle.js</a></li>
-
-</ul>
-
-<div style="background: #b91d21;width: 200px;height: 300px;margin: 10px;">
-    <div style="width: 120px;height: 130px;background: #fff;margin: 0px 0px 0px 40px;border-radius: 0px 0px 10px 10px;"></div>
-    <div style="width: 120px;height: 130px;background: #fff;margin: 40px 0px 0px 40px;border-radius: 10px 10px 0px 0px;"></div>
-</div>
+    <div class="center">
+        <div id="m">
+            <h2>Conversion of Any File Type to Base64</h2>
+            <input type="file" value="sdgsdg" id="demo_input" /> 
+            <textarea id="result"></textarea> 
+            <p id="img_area"></p>
+        </div>
+    </div> 
 </body>
 </html>

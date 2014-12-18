@@ -1,7 +1,0 @@
-CACHE MANIFEST
-# 2014-12-08 v1.0.0
-/index.html
-#NETWORK:
-FALLBACK:
-site/images images/offline.jpg
-/*.html /404.html
